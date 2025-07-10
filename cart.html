@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Carrito</title>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+  <header>
+    <h1>Carrito de compras</h1>
+    
+    <a href="index.html">← Volver a la tienda</a>
+  </header>
+
+  <div id="cart"></div>
+
+  <button onclick="clearCart()">Vaciar carrito</button>
+  <button onclick="checkout()">Finalizar compra</button>
+
+  <script>
+    function renderCart() {
+      const cartContainer = document.getElementById('cart');
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      cartContainer.innerHTML = '';
+      if (cart.length === 0) {
+        cartContainer.innerHTML = '<p>Tu carrito está vacío.</p>';
+        return;
+      }
+      cart.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'item';
+        div.innerHTML = `<strong>${item.title}</strong> - $${item.price}`;
+        cartContainer.appendChild(div);
+      });
+    }
+
+    function clearCart() {
+      localStorage.removeItem('cart');
+      renderCart();
+    }
+
+    function checkout() {
+      localStorage.removeItem('cart');
+      alert('Compra finalizada. ¡Gracias!');
+      window.location.href = 'index.html';
+    }
+
+    renderCart();
+  </script>
+</body>
+</html>
